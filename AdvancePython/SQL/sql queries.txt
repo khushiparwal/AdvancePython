@@ -31,15 +31,10 @@ mysql> desc employee;
 4 rows in set (0.01 sec)
 
 mysql> create table department(id int primary key, name varchar(50));
-Query OK, 0 rows affected (0.09 sec)
 
 mysql> alter table employee add column dept_id int;
-Query OK, 0 rows affected (0.07 sec)
-Records: 0  Duplicates: 0  Warnings: 0
 
 mysql> alter table employee add foreign key(dept_id) references department(id);
-Query OK, 3 rows affected (0.21 sec)
-Records: 3  Duplicates: 0  Warnings: 0
 
 mysql> select * from employee;
 +------+--------+---------+--------+---------+
@@ -52,16 +47,10 @@ mysql> select * from employee;
 3 rows in set (0.00 sec)
 
 mysql> insert into department values (1,"HR"),(2,"Accounts"),(3,"Sales");
-Query OK, 3 rows affected (0.05 sec)
-Records: 3  Duplicates: 0  Warnings: 0
 
 mysql> update employee set dept_id = 1 where id in (1,3);
-Query OK, 2 rows affected (0.03 sec)
-Rows matched: 2  Changed: 2  Warnings: 0
 
 mysql> update employee set dept_id = 3 where id=2;
-Query OK, 1 row affected (0.04 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
 
 mysql> select * from employee;
 +------+--------+---------+--------+---------+
@@ -83,12 +72,12 @@ mysql> select * from department;
 +----+----------+
 3 rows in set (0.00 sec)
 
+-----------------------------------------------MARKSHEET------------------------------------------------------------
+
 mysql> create table marksheet(rollno int primary key, name varchar(50),physics int, chemistry int, maths int);
 Query OK, 0 rows affected (0.07 sec)
 
 mysql> insert into marksheet values(101,'Ram',78,65,90),(102,'Shyam',85,64,52),(103,'Reema',94,96,81),(104,'Seema',74,70,26),(105,'Rohan',62,49,58);
-Query OK, 5 rows affected (0.05 sec)
-Records: 5  Duplicates: 0  Warnings: 0
 
 mysql> select * from marksheet;
 +--------+-------+---------+-----------+-------+
@@ -103,34 +92,19 @@ mysql> select * from marksheet;
 5 rows in set (0.00 sec)
 
 mysql> alter table marksheet add column total int;
-Query OK, 0 rows affected (0.06 sec)
-Records: 0  Duplicates: 0  Warnings: 0
 
 mysql> alter table marksheet drop primary key;
-Query OK, 5 rows affected (0.11 sec)
-Records: 5  Duplicates: 0  Warnings: 0
 
 mysql> alter table marksheet add primary key(rollno);
-Query OK, 0 rows affected (0.16 sec)
-Records: 0  Duplicates: 0  Warnings: 0
 
 mysql> alter table marksheet modify total float;
-Query OK, 5 rows affected (0.04 sec)
-Records: 5  Duplicates: 0  Warnings: 0
 
 mysql> alter table marksheet change total total_marks int;
-Query OK, 5 rows affected (0.10 sec)
-Records: 5  Duplicates: 0  Warnings: 0
 
 mysql> alter table marksheet rename to students_marks;
-Query OK, 0 rows affected (0.06 sec)
 
 mysql> update students_marks set total_marks=physics+chemistry+maths;
-Query OK, 5 rows affected (0.05 sec)
-Rows matched: 5  Changed: 5  Warnings: 0
 
-mysql> select * from marksheet;
-ERROR 1146 (42S02): Table 'rays.marksheet' doesn't exist
 mysql> select * from students_marks;
 +--------+-------+---------+-----------+-------+-------------+
 | rollno | name  | physics | chemistry | maths | total_marks |
@@ -143,8 +117,6 @@ mysql> select * from students_marks;
 +--------+-------+---------+-----------+-------+-------------+
 5 rows in set (0.00 sec)
 
-mysql> select *,(total)*100/3 as percentage from students_marks;
-ERROR 1054 (42S22): Unknown column 'total' in 'field list'
 mysql> select *,(total_marks)*100/3 as percentage from students_marks;
 +--------+-------+---------+-----------+-------+-------------+------------+
 | rollno | name  | physics | chemistry | maths | total_marks | percentage |
@@ -193,6 +165,8 @@ mysql> select *,(total_marks)/3 as percentage, if(physics>=33 and chemistry>=33 
 +--------+-------+---------+-----------+-------+-------------+------------+--------+
 5 rows in set (0.00 sec)
 
+-----------------------------------EMPLOYEE, DEPARTMENT-------------------------------------------------------------------
+
 mysql> select * from employee;
 +------+--------+---------+--------+---------+
 | id   | name   | company | salary | dept_id |
@@ -228,3 +202,18 @@ mysql> select * from department;
 3 rows in set (0.00 sec)
 
 mysql> alter table department drop column department_size;
+
+----------------------------------------------USER----------------------------------------------------------------------
+
+mysql> create table user(id int, firstname varchar(50),lastname varchar(50), loginId int, password varchar(50), dob date, address varchar(100));
+
+mysql> insert into user values(1,'Ram','Sharma',101,'root','14-02-1997','Delhi');
+
+mysql> insert into user values(1,'Ram','Sharma',101,'root','1997-02-15','Delhi');
+
+mysql> insert into user values(2,'Naman','Gupta',102,'roots','1995-07-05','Bengaluru');
+
+mysql> insert into user values(3,'Rita','Jose',103,'rays','2000-01-30','Hyderabad');
+
+mysql> insert into user values(4,'Aarti','Singh',104,'ray','2002-05-04','Mumbai');
+
