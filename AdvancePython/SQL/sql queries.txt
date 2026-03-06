@@ -217,3 +217,76 @@ mysql> insert into user values(3,'Rita','Jose',103,'rays','2000-01-30','Hyderaba
 
 mysql> insert into user values(4,'Aarti','Singh',104,'ray','2002-05-04','Mumbai');
 
+-------------------------------------------PROCEDURES----------------------------
+mysql> delimiter &&
+mysql> create procedure employeein(in c int)
+    -> begin
+    -> select * from employee where id=c;
+    -> end &&
+
+mysql> delimiter ;
+mysql> set @input=4;
+
+mysql> call employeein(@input);
++------+-------+-----------+--------+---------+
+| id   | name  | company   | salary | dept_id |
++------+-------+-----------+--------+---------+
+|    4 | seema | capgemini |  90000 |       2 |
++------+-------+-----------+--------+---------+
+1 row in set (0.05 sec)
+
+--------empout--------------
+
+mysql> delimiter &&
+mysql> create procedure employeeout(out c int)
+    -> begin
+    -> select salary into c from employee where id=3;
+    -> end &&
+
+mysql> delimiter ;
+mysql> call employeeout(@output);
+
+mysql> select @output;
++---------+
+| @output |
++---------+
+|   80000 |
++---------+
+
+----------------------empinout-------------------------
+mysql> delimiter &&
+mysql> create procedure employeeinout(inout c int)
+    -> begin
+    -> select salary into c from employee where id=c;
+    -> end &&
+
+mysql> delimiter ;
+mysql> set @inout=1;
+
+mysql> call employeeinout(@inout);
+mysql> select @inout;
++--------+
+| @inout |
++--------+
+|  40000 |
++--------+
+
+---------------------------STORED-FUNCTION------------------------------------
+mysql> delimiter &&
+mysql> create function square(num int)
+    -> returns int
+    -> deterministic
+    -> begin
+    -> declare result int;
+    -> set result = num*num;
+    -> return result;
+    -> end &&
+
+mysql> delimiter ;
+mysql> select square(7);
++-----------+
+| square(7) |
++-----------+
+|        49 |
++-----------+
+1 row in set (0.05 sec)
